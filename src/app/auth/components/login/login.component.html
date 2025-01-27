@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="login-container">
+        <div class="logo">
+            <img src="assets/logo.png" />
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="input-container">
+                <input id="email" formControlName="email" type="email" placeholder=" " [ngClass]="{'invalid':loginForm.get('email')?.invalid 
+                    && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)}" />
+                <label for="email" [ngClass]="{'label-invalid':loginForm.get('email')?.invalid 
+          && (loginForm.get('email')?.touched 
+          || loginForm.get('email')?.dirty)}">Usuário</label>
+                <div *ngIf="loginForm.get('email')?.invalid 
+                  && (loginForm.get('email')?.touched 
+                  || loginForm.get('email')?.dirty)">
+                    <small *ngIf="loginForm.get('email')?.errors?.['required']">
+                        Usuário é obrigatório.</small>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input id="password" formControlName="password" type="password" placeholder=" " [ngClass]="{'invalid':loginForm.get('password')?.invalid 
+          && (loginForm.get('password')?.touched 
+          || loginForm.get('password')?.dirty)}" />
+                <label for="password" [ngClass]="{'label-invalid':loginForm.get('password')?.invalid 
+          && (loginForm.get('password')?.touched 
+          || loginForm.get('password')?.dirty)}">Senha</label>
+                <div *ngIf="loginForm.get('password')?.invalid 
+                  && (loginForm.get('password')?.touched 
+                  || loginForm.get('password')?.dirty)">
+                    <small *ngIf="loginForm.get('password')?.errors?.['required']">
+                        Senha é obrigatório.</small>
+                </div>
+            </div>
+            <button type="submit" [disabled]="loginForm.invalid"
+                [ngClass]="{'button-active':loginForm.valid}">Entrar</button>
+        </form>
+    </div>
+</div>
