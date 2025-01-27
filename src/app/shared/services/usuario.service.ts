@@ -10,7 +10,7 @@ import { DaoService } from './dao.service';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private readonly apiUrl = 'https://user-manager-r1k9.onrender.com';
+  private readonly apiUrl = 'https://user-manager-spring.onrender.com';
   constructor(
     private daoService: DaoService,
     private http: HttpClient,
