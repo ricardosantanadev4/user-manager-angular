@@ -1,7 +1,7 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IUsuario } from '../../../../shared/models/usuario.interface';
 import { UsuarioService } from '../../../../shared/services/usuario.service';
 
@@ -16,7 +16,7 @@ export class DetalheUsuarioComponent {
   form!: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
-    private usuarioService: UsuarioService) {
+    private usuarioService: UsuarioService, private router: Router) {
     const usuarioResolver: IUsuario = this.route.snapshot.data['usuarioResolver']
     this.initForm(usuarioResolver);
   }
@@ -31,8 +31,8 @@ export class DetalheUsuarioComponent {
     })
   }
 
-  novoRegistro() {
-    alert('Novo registro iniciado!');
+  cancelar() {
+    this.router.navigate(['/usuarios']);
   }
 
   salvar() {
