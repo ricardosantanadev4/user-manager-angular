@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,7 +11,7 @@ import { UsuarioService } from '../../../shared/services/usuario.service';
 @Component({
   selector: 'app-usuario',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule, MatIconModule, MatButtonModule, MatTooltipModule],
+  imports: [NgIf, NgFor, FormsModule, MatIconModule, MatButtonModule, MatTooltipModule, DatePipe],
   templateUrl: './usuario.component.html',
   styleUrl: './usuario.component.scss'
 })

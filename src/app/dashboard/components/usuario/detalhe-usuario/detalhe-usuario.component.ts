@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { UsuarioService } from '../../../../shared/services/usuario.service';
 @Component({
   selector: 'app-detalhe-usuario',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, DatePipe],
   templateUrl: './detalhe-usuario.component.html',
   styleUrl: './detalhe-usuario.component.scss'
 })
@@ -24,6 +24,8 @@ export class DetalheUsuarioComponent {
   initForm(usuarioResolver: IUsuario) {
     this.form = this.formBuilder.group({
       id: [usuarioResolver?.id],
+      dataHoraCadastro: [usuarioResolver?.dataHoraCadastro],
+      usuarioCriador: [usuarioResolver?.usuarioCriador],
       nome: [usuarioResolver?.nome, Validators.required],
       email: [usuarioResolver?.email, [Validators.required, Validators.email]],
       telefone: [usuarioResolver?.telefone, [Validators.required, , Validators.minLength(11),
