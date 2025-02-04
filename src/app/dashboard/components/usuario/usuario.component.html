@@ -11,7 +11,8 @@
                 <th (click)="sort('dataHoraCadastro')">Data/Hora Cadastro <span
                         *ngIf="sortedColumn === 'dataHoraCadastro'">
                         {{ sortDirection === 'asc' ? '▲':'▼'}}</span></th>
-                <th (click)="sort('usuarioCriador')">Usuário Criador <span *ngIf="sortedColumn === 'usuarioCriador'">
+                <th (click)="sort('usuarioCadastrado')">Usuário Cadastrado <span
+                        *ngIf="sortedColumn === 'usuarioCadastrado'">
                         {{ sortDirection === 'asc' ? '▲':'▼'}}</span></th>
                 <th (click)="sort('nome')">Nome <span *ngIf="sortedColumn === 'nome'">
                         {{ sortDirection === 'asc' ? '▲' : '▼'}}</span></th>
@@ -26,7 +27,7 @@
             <tr *ngFor="let item of applyFilter()">
                 <td data-label="Código">{{ item.id }}</td>
                 <td data-label="Data/Hora Cadastro">{{ item.dataHoraCadastro | date: 'dd-MM-yy HH:mm:ss'}}</td>
-                <td data-label="Usuário Criador">{{ item.usuarioCriador }}</td>
+                <td data-label="Usuário Cadastrado">{{ item.usuarioCadastrado }}</td>
                 <td data-label="Nome">{{ item.nome }}</td>
                 <td data-label="Email">{{ item.email }}</td>
                 <td data-label="Telefone">{{ item.telefone }}</td>

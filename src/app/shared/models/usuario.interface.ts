@@ -1,7 +1,7 @@
 export interface IUsuario {
     id: number;
     dataHoraCadastro: Date;
-    usuarioCriador: string;
+    usuarioCadastrado: string;
     nome: string;
     email: string;
     telefone: string;

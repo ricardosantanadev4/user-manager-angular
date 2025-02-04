@@ -14,6 +14,7 @@ import { UsuarioService } from '../../../../shared/services/usuario.service';
 })
 export class DetalheUsuarioComponent {
   form!: FormGroup;
+  usuarioCadastrado = 'User-Teste';
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
     private usuarioService: UsuarioService, private router: Router) {
@@ -25,7 +26,7 @@ export class DetalheUsuarioComponent {
     this.form = this.formBuilder.group({
       id: [usuarioResolver?.id],
       dataHoraCadastro: [usuarioResolver?.dataHoraCadastro],
-      usuarioCriador: [usuarioResolver?.usuarioCriador],
+      usuarioCadastrado: [usuarioResolver?.usuarioCadastrado],
       nome: [usuarioResolver?.nome, Validators.required],
       email: [usuarioResolver?.email, [Validators.required, Validators.email]],
       telefone: [usuarioResolver?.telefone, [Validators.required, , Validators.minLength(11),
@@ -39,6 +40,7 @@ export class DetalheUsuarioComponent {
 
   salvar() {
     if (this.form.valid && this.form.get('id')?.value === null) {
+      this.setarUsuarioCadastrado();
       this.usuarioService.criarUsuario(this.form.value).subscribe(
         {
           next: response => { alert('Usuário salvo com sucesso!') },
@@ -55,5 +57,16 @@ export class DetalheUsuarioComponent {
     if (this.form.invalid) {
       alert('Existe algum campo inválido verifique os campos e tente novamete.');
     }
+  }
+
+  setarUsuarioCadastrado() {
+    this.form.setValue({
+      id: this.form.get('id')?.value,
+      dataHoraCadastro: this.form.get('dataHoraCadastro')?.value,
+      usuarioCadastrado: this.usuarioCadastrado,
+      nome: this.form.get('nome')?.value,
+      email: this.form.get('email')?.value,
+      telefone: this.form.get('telefone')?.value
+    })
   }
 }
