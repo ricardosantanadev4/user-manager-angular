@@ -1,20 +1,22 @@
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUsuario } from '../../../../shared/models/usuario.interface';
 import { UsuarioService } from '../../../../shared/services/usuario.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-detalhe-usuario',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, DatePipe],
+  imports: [ReactiveFormsModule, NgIf, DatePipe, NgClass],
   templateUrl: './detalhe-usuario.component.html',
   styleUrl: './detalhe-usuario.component.scss'
 })
 export class DetalheUsuarioComponent {
   form!: FormGroup;
   usuarioCadastrado = 'User-Teste';
+  usuarioSalvo: Boolean = false;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
     private usuarioService: UsuarioService, private router: Router) {
@@ -43,7 +45,13 @@ export class DetalheUsuarioComponent {
       this.setarUsuarioCadastrado();
       this.usuarioService.criarUsuario(this.form.value).subscribe(
         {
-          next: response => { alert('Usuário salvo com sucesso!') },
+          next: response => {
+            if (response.body) {
+              this.carregarUsuarioNoFormulario(response.body);
+              this.usuarioSalvo = true;
+            }
+            alert('Usuário salvo com sucesso!')
+          },
           error: response => { alert('Ocorreu um erro ao tentar salvar o usuário.') }
         }
       );
@@ -67,6 +75,17 @@ export class DetalheUsuarioComponent {
       nome: this.form.get('nome')?.value,
       email: this.form.get('email')?.value,
       telefone: this.form.get('telefone')?.value
+    })
+  }
+
+  carregarUsuarioNoFormulario(usuario: IUsuario) {
+    this.form.setValue({
+      id: usuario.id,
+      dataHoraCadastro: usuario.dataHoraCadastro,
+      usuarioCadastrado: usuario.usuarioCadastrado,
+      nome: usuario.nome,
+      email: usuario.email,
+      telefone: usuario.telefone,
     })
   }
 }

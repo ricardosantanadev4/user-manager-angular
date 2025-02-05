@@ -1,5 +1,4 @@
 .formulario-container {
-    // width: 100%;
     max-width: 1140px;
     margin: 20px auto;
     padding: 20px;
@@ -35,7 +34,6 @@
             }
 
             input {
-                // width: 100%;
                 max-width: 535px;
                 padding: 8px;
                 font-size: 14px;
@@ -70,19 +68,26 @@
             cursor: pointer;
             transition: background-color 0.3s;
 
-            &:first-child {
+            &.button-cancel {
                 background-color: #6c757d;
                 color: #fff;
             }
 
-            &:last-child {
+            &.button-save {
                 background-color: #007bff;
                 color: #fff;
+            }
+
+            &.disabled {
+                background-color: rgb(222, 221, 225);
+                color: rgb(146, 147, 150);
             }
 
             &:hover {
                 opacity: 0.9;
             }
         }
+
+
     }
 }
