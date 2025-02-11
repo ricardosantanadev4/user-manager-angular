@@ -17,8 +17,9 @@ export class UsuarioService {
     private http: HttpClient,
   ) { }
 
-  public listarUsuariosPaginados(page: number, size: number, search?: string): Observable<HttpResponse<IUsuarioPage>> {
-    return this.daoService.get<IUsuarioPage>(`${this.apiUrl}${AppSettings.USUARIOS}?page=${page}&size=${size}&search=${search}`,
+  public listarUsuariosPaginados(page: number, size: number, search?: string, dataInicial?: string, dataFinal?: string): Observable<HttpResponse<IUsuarioPage>> {
+    return this.daoService.get<IUsuarioPage>(`${this.apiUrl}${AppSettings.USUARIOS}?page=${page}
+      &size=${size}&search=${search}&dataInicial=${dataInicial}&dataFinal=${dataFinal}`,
       DaoService.MEDIA_TYPE_APP_JSON);
   }
 

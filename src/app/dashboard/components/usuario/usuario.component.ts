@@ -1,7 +1,10 @@
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,34 +14,63 @@ import { UsuarioService } from '../../../shared/services/usuario.service';
 @Component({
   selector: 'app-usuario',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule, MatIconModule, MatButtonModule, MatTooltipModule, DatePipe],
+  providers: [provideNativeDateAdapter(), { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
+  imports: [NgIf, NgFor, FormsModule, MatIconModule, MatButtonModule, MatTooltipModule, DatePipe,
+    MatFormFieldModule, MatDatepickerModule, ReactiveFormsModule],
   templateUrl: './usuario.component.html',
   styleUrl: './usuario.component.scss'
 })
 export class UsuarioComponent {
+  readonly range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
+
   filter: string = '';
   maxPageButtons = 10;
-  currentPage: number = 1;
   totalPages!: number;
+  data: IUsuario[] = [];
   totalElements!: number;
+  currentPage: number = 1;
+  startDateISO: string = '';
+  endDateISO: string = '';
   itemsPerPage: number = 10; // Itens por página
   sortedColumn: string = ''; // Coluna atualmente ordenada
   sortDirection: 'asc' | 'desc' = 'asc'; // Direção da ordenação
   itemsPerPageOptions: number[] = [5, 10, 15, 20]; // Opções para o seletor
   position: TooltipPosition[] = ['below', 'above', 'left', 'right'];
-  data: IUsuario[] = [];
 
   constructor(private usurioService: UsuarioService, private router: Router,
     private route: ActivatedRoute) {
     this.listarUsuarios();
   }
 
+  ngOnInit() {
+    this.detectarDatasSelecionadas();
+  }
+
   listarUsuarios() {
-    this.usurioService.listarUsuariosPaginados(this.currentPage - 1, this.itemsPerPage, this.filter).subscribe(r => {
-      if (r.body) {
-        this.data = r.body.usuarios;
-        this.totalPages = r.body.totalPages;
-        this.totalElements = r.body.totalElements;
+    this.usurioService.listarUsuariosPaginados(this.currentPage - 1, this.itemsPerPage, this.filter,
+      this.startDateISO, this.endDateISO).subscribe(r => {
+        if (r.body) {
+          this.data = r.body.usuarios;
+          this.totalPages = r.body.totalPages;
+          this.totalElements = r.body.totalElements;
+          this.startDateISO = '';
+          this.endDateISO = '';
+        }
+      });
+  }
+
+  detectarDatasSelecionadas() {
+    this.range.valueChanges.subscribe(val => {
+      if (val.start && val.end) {
+        const startDate: Date = val.start;
+        const endDate: Date = val.end;
+        // Convertendo para o formato ISO 8601 (compatível com LocalDateTime no backend)
+        this.startDateISO = startDate.toISOString().replace("Z", ""); // Ex: "2025-02-12T00:00:00.000Z"
+        this.endDateISO = endDate.toISOString().replace("Z", ""); // Ex: "2025-02-28T23:59:59.999Z"
+        this.listarUsuarios();
       }
     });
   }

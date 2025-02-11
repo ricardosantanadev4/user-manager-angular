@@ -1,6 +1,17 @@
 <div class="table-container">
     <div class="table-header">
-        <input type="text" [(ngModel)]="filter" (keydown.enter)="listarUsuarios()" placeholder="Pesquisar..." />
+        <div class="header-left">
+            <input class="input-search" type="text" [(ngModel)]="filter" (keydown.enter)="listarUsuarios()"
+                placeholder="Pesquisar..." />
+            <mat-form-field style="margin-left: 15px;">
+                <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Data inicial">
+                    <input matEndDate formControlName="end" placeholder="Data Final">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+        </div>
         <button mat-raised-button (click)="navigateTo('detalhe')">Novo Usuario</button>
     </div>
     <table>
