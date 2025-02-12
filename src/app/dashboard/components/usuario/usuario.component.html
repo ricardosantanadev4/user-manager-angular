@@ -8,11 +8,22 @@
                     <input matStartDate formControlName="start" placeholder="Data inicial">
                     <input matEndDate formControlName="end" placeholder="Data Final">
                 </mat-date-range-input>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker-toggle matIconSuffix [for]="picker" #tooltip="matTooltip" matTooltip="Filtrar Por Data"
+                    [matTooltipPosition]="position[1]" matTooltipHideDelay="1"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
             </mat-form-field>
+            <button style="margin-left: 15px;" mat-icon-button aria-label="Recarregar todos usuários"
+                #tooltip="matTooltip" matTooltip="Recarregar Usuários" [matTooltipPosition]="position[1]"
+                matTooltipHideDelay="1" (click)="listarUsuarios()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+            <button style="margin-left: 15px;" mat-icon-button aria-label="Limpar campos" #tooltip="matTooltip"
+                matTooltip="Limpar Datas" [matTooltipPosition]="position[1]" matTooltipHideDelay="1"
+                (click)="limparCampoDeDatas()">
+                <mat-icon>cleaning_services</mat-icon>
+            </button>
         </div>
-        <button mat-raised-button (click)="navigateTo('detalhe')">Novo Usuario</button>
+        <button class="button-new-user" mat-raised-button (click)="navigateTo('detalhe')">Novo Usuario</button>
     </div>
     <table>
         <thead>

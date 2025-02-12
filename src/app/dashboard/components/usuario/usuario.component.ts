@@ -21,7 +21,7 @@ import { UsuarioService } from '../../../shared/services/usuario.service';
   styleUrl: './usuario.component.scss'
 })
 export class UsuarioComponent {
-  readonly range = new FormGroup({
+  range = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
@@ -46,6 +46,14 @@ export class UsuarioComponent {
   }
 
   ngOnInit() {
+    this.detectarDatasSelecionadas();
+  }
+
+  limparCampoDeDatas() {
+    this.range = new FormGroup({
+      start: new FormControl<Date | null>(null),
+      end: new FormControl<Date | null>(null),
+    });
     this.detectarDatasSelecionadas();
   }
 

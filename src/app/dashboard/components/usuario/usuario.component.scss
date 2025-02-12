@@ -10,22 +10,28 @@
         justify-content: space-between;
         align-items: center;
 
-        .input-search {
-            padding: 5px;
-            max-width: 200px;
-            border: 1px solid rgba(0, 0, 0, .12);
-            border-radius: 4px;
-            box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
-            max-height: 16px;
+        .header-left {
+            display: flex;
+            align-items: center;
 
-            &:focus-visible {
-                outline: none;
-                border: 1px solid transparent;
+
+            .input-search {
+                padding: 5px;
+                max-width: 200px;
+                border: 1px solid rgba(0, 0, 0, .12);
+                border-radius: 4px;
                 box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+                max-height: 16px;
+
+                &:focus-visible {
+                    outline: none;
+                    border: 1px solid transparent;
+                    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+                }
             }
         }
 
-        button {
+        .button-new-user {
             border-radius: 4px;
             background-color: #3f51b5;
             color: #fff;
@@ -64,13 +70,7 @@
         }
     }
 
-    @media (max-width: 728px) {
-        .header-left {
-            display: contents;
-        }
-    }
-
-    @media (max-width: 640px) {
+    @media (max-width: 760px) {
         .table-header {
             flex-wrap: wrap;
             gap: 15px;
@@ -80,6 +80,10 @@
                 width: 100%;
                 padding: 5px 0px 5px 3px;
             }
+        }
+
+        .header-left {
+            display: contents !important;
         }
 
         table,
@@ -192,7 +196,7 @@
     }
 }
 
-// Estilos sobrescritos no scss para o Range Picker
+// Estilos sobrescritos no scss para o Range Picker Angular Material
 ::ng-deep .mat-mdc-form-field-subscript-wrapper,
 ::ng-deep .mat-mdc-form-field-bottom-align::before {
     // Remove o container gerado automaticamente em baixo do input
@@ -219,4 +223,10 @@
 ::ng-deep .mdc-line-ripple--active::after {
     //  Desativa a cor azul na borda inferior do input quando ele é clicado
     opacity: 0 !important;
+}
+
+
+// Estilos sobrescritos no scss para mat-icon-button Angular Material
+.mat-mdc-icon-button {
+    color: rgb(112, 112, 112);
 }
