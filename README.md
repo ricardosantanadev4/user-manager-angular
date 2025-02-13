@@ -32,7 +32,7 @@ O **User Manager Angular** é um sistema de frontend para gerenciamento de usuá
 ### **Hospedagem**
 O projeto está hospedado na **Vercel** e pode ser acessado pelo link:  
 🔗 [User Manager Angular](https://user-manager-angular.vercel.app/auth/login)  
-(Para testar, use o e-mail "demo@seudominio.com" e a senha "demo123". Autenticação real em desenvolvimento.)
+(Para testar, use o e-mail demo@seudominio.com e a senha demo123. Autenticação real em desenvolvimento.)
 
 ---
 
