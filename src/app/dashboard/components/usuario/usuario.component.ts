@@ -139,8 +139,11 @@ export class UsuarioComponent {
             }
           );
           this.notificationService.showSuccess('O registro foi excluido.', 'Excluído');
-        }else if(result.dismiss === Swal.DismissReason.cancel){
-          this.notificationService.showError('O registro não foi removido :)','Cancelado');
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          this.notificationService.showError('O registro não foi removido :)', 'Cancelado')
+            .then(() => {
+              this.listarUsuarios();
+            });
         }
       })
   }
