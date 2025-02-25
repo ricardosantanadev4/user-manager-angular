@@ -2,15 +2,8 @@ export class AppState {
 
     private tokenKey = 'authToken';
 
-    // get token(): string {
-    //     return sessionStorage.getItem(this.tokenKey) || '';
-    // }
-
-    get token(): string | null {
-        if (typeof window !== 'undefined') {
-            return sessionStorage.getItem('token');
-        }
-        return null; // Ou um valor padrão apropriado
+    get token(): string {
+        return sessionStorage.getItem(this.tokenKey) || '';
     }
 
     set token(token: string) {
@@ -24,4 +17,5 @@ export class AppState {
     clearToken() {
         sessionStorage.removeItem(this.tokenKey);
     }
+
 }

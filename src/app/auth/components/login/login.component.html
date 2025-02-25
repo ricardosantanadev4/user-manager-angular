@@ -19,16 +19,16 @@
             </div>
 
             <div class="input-container">
-                <input id="password" formControlName="password" type="password" placeholder=" " [ngClass]="{'invalid':loginForm.get('password')?.invalid 
-          && (loginForm.get('password')?.touched 
-          || loginForm.get('password')?.dirty)}" />
-                <label for="password" [ngClass]="{'label-invalid':loginForm.get('password')?.invalid 
-          && (loginForm.get('password')?.touched 
-          || loginForm.get('password')?.dirty)}">Senha</label>
-                <div *ngIf="loginForm.get('password')?.invalid 
-                  && (loginForm.get('password')?.touched 
-                  || loginForm.get('password')?.dirty)">
-                    <small *ngIf="loginForm.get('password')?.errors?.['required']">
+                <input id="senha" formControlName="senha" type="senha" placeholder=" " [ngClass]="{'invalid':loginForm.get('senha')?.invalid 
+          && (loginForm.get('senha')?.touched 
+          || loginForm.get('senha')?.dirty)}" />
+                <label for="senha" [ngClass]="{'label-invalid':loginForm.get('senha')?.invalid 
+          && (loginForm.get('senha')?.touched 
+          || loginForm.get('senha')?.dirty)}">Senha</label>
+                <div *ngIf="loginForm.get('senha')?.invalid 
+                  && (loginForm.get('senha')?.touched 
+                  || loginForm.get('senha')?.dirty)">
+                    <small *ngIf="loginForm.get('senha')?.errors?.['required']">
                         Senha é obrigatório.</small>
                 </div>
             </div>

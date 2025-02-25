@@ -7,9 +7,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AppState } from './app.state';
 import { loadingInterceptor } from './shared/interceptors/loading.interceptor';
+import { authInterceptorInterceptor } from './shared/interceptors/auth-interceptor.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes),
   provideClientHydration(), provideAnimationsAsync(),
-  provideHttpClient(withInterceptors([loadingInterceptor])), AppState,]
+  provideHttpClient(withInterceptors([loadingInterceptor, authInterceptorInterceptor])), AppState,]
 };

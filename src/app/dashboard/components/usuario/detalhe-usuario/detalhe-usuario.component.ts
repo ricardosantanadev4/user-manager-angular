@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUsuario } from '../../../../shared/models/usuario.interface';
+import { NotificationService } from '../../../../shared/services/notification.service';
 import { UsuarioService } from '../../../../shared/services/usuario.service';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-detalhe-usuario',
@@ -19,7 +19,8 @@ export class DetalheUsuarioComponent {
   usuarioSalvo: Boolean = false;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
-    private usuarioService: UsuarioService, private router: Router) {
+    private usuarioService: UsuarioService, private router: Router,
+    private notificationService: NotificationService) {
     const usuarioResolver: IUsuario = this.route.snapshot.data['usuarioResolver']
     this.initForm(usuarioResolver);
   }
@@ -50,20 +51,32 @@ export class DetalheUsuarioComponent {
               this.carregarUsuarioNoFormulario(response.body);
               this.usuarioSalvo = true;
             }
-            alert('Usuário salvo com sucesso!')
+            this.notificationService.showSuccess('Usuário salvo com sucesso!');
           },
-          error: response => { alert('Ocorreu um erro ao tentar salvar o usuário.') }
+          error: (response) => {
+            if (response.status === 403 && this.usuarioService.isUser()) {
+              this.notificationService.showError('Você não tem permissão para realizar essa ação!')
+            }
+          }
         }
       );
     }
     if (this.form.valid && this.form.value.id > 0) {
       this.usuarioService.editarUsuario(this.form.value).subscribe({
-        next: response => { alert('Usuário editado com sucesso!') },
-        error: response => { alert('Ocorreu um erro ao tentar editar o usuário.') }
+        next: () => {
+          this.usuarioSalvo = true;
+          this.notificationService.showSuccess('Usuário editado com sucesso!');
+        },
+        error: response => {
+          if (response.status === 403 && this.usuarioService.isUser()) {
+            this.notificationService.showError('Você não tem permissão para realizar essa ação!')
+          }
+        }
       });
     }
     if (this.form.invalid) {
-      alert('Existe algum campo inválido verifique os campos e tente novamete.');
+      this.notificationService.showError(
+        'Existe algum campo inválido verifique os campos e tente novamete.');
     }
   }
 

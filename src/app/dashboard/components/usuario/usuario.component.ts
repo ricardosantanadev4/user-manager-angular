@@ -9,7 +9,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUsuario } from '../../../shared/models/usuario.interface';
+import { NotificationService } from '../../../shared/services/notification.service';
 import { UsuarioService } from '../../../shared/services/usuario.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario',
@@ -40,8 +42,8 @@ export class UsuarioComponent {
   itemsPerPageOptions: number[] = [5, 10, 15, 20]; // Opções para o seletor
   position: TooltipPosition[] = ['below', 'above', 'left', 'right'];
 
-  constructor(private usurioService: UsuarioService, private router: Router,
-    private route: ActivatedRoute) {
+  constructor(private usuarioService: UsuarioService, private router: Router,
+    private route: ActivatedRoute, private notificationService: NotificationService) {
     this.listarUsuarios();
   }
 
@@ -58,7 +60,7 @@ export class UsuarioComponent {
   }
 
   listarUsuarios() {
-    this.usurioService.listarUsuariosPaginados(this.currentPage - 1, this.itemsPerPage, this.filter,
+    this.usuarioService.listarUsuariosPaginados(this.currentPage - 1, this.itemsPerPage, this.filter,
       this.startDateISO, this.endDateISO).subscribe(r => {
         if (r.body) {
           this.data = r.body.usuarios;
@@ -116,20 +118,31 @@ export class UsuarioComponent {
   }
 
   removerUsuario(usuarioID: number) {
-    this.usurioService.removerUsuario(usuarioID).subscribe(
-      {
-        next: response => {
-          alert('Usuário removido!'),
-            this.listarUsuarios();
-        },
-        error: response => {
-          alert('Erro ao tentar remover usuário.'),
-            this.listarUsuarios();
+    this.notificationService.showWarning('Essa ação não poderá ser desfeita!',
+      'Tem certeza que deseja remover o registro?').then((result) => {
+        if (result.isConfirmed) {
+          this.usuarioService.removerUsuario(usuarioID).subscribe(
+            {
+              next: () => {
+                this.notificationService.showSuccess('Usuário removido!').then(() => {
+                  this.listarUsuarios(); // Será chamado somente depois do usuário clicar "OK"
+                });
+              },
+              error: response => {
+                if (response.status === 403 && this.usuarioService.isUser()) {
+                  this.notificationService.showError('Você não tem permissão para realizar essa ação!')
+                    .then(() => {
+                      this.listarUsuarios();
+                    });
+                }
+              },
+            }
+          );
+          this.notificationService.showSuccess('O registro foi excluido.', 'Excluído');
+        }else if(result.dismiss === Swal.DismissReason.cancel){
+          this.notificationService.showError('O registro não foi removido :)','Cancelado');
         }
-
-      }
-    );
-
+      })
   }
 
 

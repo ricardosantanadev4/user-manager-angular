@@ -1,11 +1,14 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { catchError, delay, finalize } from 'rxjs';
 import Swal from 'sweetalert2';
+import { UsuarioService } from '../services/usuario.service';
 
 export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
+const usuarioService = inject(UsuarioService);
+
   Swal.fire({
     title: 'Carregando...',
-    // text: 'Aguarde enquanto carrega os dados.',
     background: '#FFFFFF',
     color: '#000000',
     allowOutsideClick: false,
@@ -22,22 +25,28 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
       document.head.appendChild(style);
     }
   });
+
   return next(req).pipe(
     delay(300),
     catchError((error) => {
-      // Lida com o erro da requisição
       console.error('Erro na requisição:', error);
+
+      // Exibe um alerta de erro que só fecha ao clicar em "OK"
       Swal.fire({
         title: 'Erro!',
         text: 'Ocorreu um problema durante a requisição.',
         icon: 'error',
         confirmButtonText: 'OK'
       });
+
       throw error; // Repassa o erro para outros manipuladores
     }),
     finalize(() => {
-      Swal.close()
-    }
-    ) // Fecha o alerta ao completar ou falhar a requisição
+      // Fecha apenas se não houver erro
+      if (Swal.isVisible() && Swal.getTitle()?.textContent === 'Carregando...') {
+        Swal.close();
+      }
+    })
   );
+
 };

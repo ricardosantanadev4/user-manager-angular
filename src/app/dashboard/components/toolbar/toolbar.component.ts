@@ -17,11 +17,6 @@ export class ToolbarComponent {
   @Output() userToogleSidenav = new EventEmitter<boolean>(false);
   userName = '';
 
-  // constructor(private userService: UserService) {
-  //   this.getUserName();
-  //   this.userService.setUserName(this.userName);
-  // }
-
   SignOut() {
     this.userLogout.emit(true);
   }
