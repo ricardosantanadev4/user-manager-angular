@@ -7,6 +7,7 @@ O **User Manager Angular** é um sistema de frontend para gerenciamento de usuá
 ---
 
 ### **Funcionalidades**
+- Autenticação de usuário com token jwt
 - Cadastro de novos usuários  
 - Listagem de usuários  
 - Atualização de informações de usuários  
@@ -32,7 +33,7 @@ O **User Manager Angular** é um sistema de frontend para gerenciamento de usuá
 ### **Hospedagem**
 O projeto está hospedado na **Vercel** e pode ser acessado pelo link:  
 🔗 [User Manager Angular](https://user-manager-angular.vercel.app/auth/login)  
-(Para testar, use o e-mail demo@seudominio.com e a senha demo123. Autenticação real em desenvolvimento.)
+(Para testar, use os seguintes emails: admin@domain.com e a senha Admin#2025 para o perfil Admin ou user@domain.com e senha User#2025 para testar o User. O usuário de perfil Admin pode realizar todas ações no sistema inclusive excluir e editar, enquanto o usuário de perfil User só tem permisão para visualizar as informações.)
 
 ---
 
