@@ -14,8 +14,8 @@ import { DaoService } from './dao.service';
 })
 export class UsuarioService {
 
-  // private readonly apiUrl = 'https://user-manager-spring.onrender.com';
-  private readonly apiUrl = '';
+  private readonly apiUrl = 'https://user-manager-spring.onrender.com';
+  // private readonly apiUrl = '';
   private jwtHelper = new JwtHelperService();
 
   constructor(
