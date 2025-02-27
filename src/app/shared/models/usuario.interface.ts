@@ -4,5 +4,6 @@ export interface IUsuario {
     usuarioCadastrado: string;
     nome: string;
     email: string;
+    senha: string;
     telefone: string;
 }

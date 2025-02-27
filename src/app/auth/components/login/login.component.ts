@@ -1,11 +1,10 @@
 import { NgClass, NgIf } from '@angular/common';
+import { HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../../shared/services/usuario.service';
 import { ILogin } from '../../../shared/models/login.interface';
-import { response } from 'express';
-import { HttpStatusCode } from '@angular/common/http';
+import { TokenService } from '../../../shared/services/token.service';
 
 
 @Component({
@@ -15,17 +14,17 @@ import { HttpStatusCode } from '@angular/common/http';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
 
   constructor(private formBuider: FormBuilder, private router: Router,
-    private usuarioService: UsuarioService) {
+    private tokenService: TokenService) {
     this.initForm();
   }
 
   ngOnInit(): void {
-    this.usuarioService.clearToken();
+    this.tokenService.clearToken();
   }
 
   initForm() {
@@ -38,11 +37,11 @@ export class LoginComponent implements OnInit{
   onSubmit() {
     if (this.loginForm.valid) {
       let login: ILogin = this.loginForm.value;
-      this.usuarioService.login(login).subscribe({
+      this.tokenService.login(login).subscribe({
         next: (httpResponse) => {
           if (httpResponse.status === HttpStatusCode.Ok) {
-            let token =  httpResponse.headers.get('Authorization')?.replace('Bearer ','') || '';
-            this.usuarioService.token = token;
+            let token = httpResponse.headers.get('Authorization')?.replace('Bearer ', '') || '';
+            this.tokenService.token = token;
             this.router.navigate(['/usuarios']);
           }
         },

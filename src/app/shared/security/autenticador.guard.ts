@@ -1,14 +1,14 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { UsuarioService } from '../services/usuario.service';
+import { TokenService } from '../services/token.service';
 
 export const autenticadorGuard: CanActivateFn = (route, state) => {
 
   const router = inject(Router);
-  const usuarioService = inject(UsuarioService);
+  const tokenService = inject(TokenService);
 
-  if (usuarioService.usuarioLogado) {
+  if (tokenService.usuarioLogado) {
     return true;
   }
 

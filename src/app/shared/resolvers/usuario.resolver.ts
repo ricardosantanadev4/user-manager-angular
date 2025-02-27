@@ -15,5 +15,5 @@ export const usuarioResolver: ResolveFn<IUsuario> = (route, state) => {
   }
 
   // Retorna um objeto padrão do tipo IServico
-  return of({ id: 0, dataHoraCadastro: new Date(), usuarioCadastrado: '', nome: '', email: '', telefone: '', });
+  return of({ id: 0, dataHoraCadastro: new Date(), usuarioCadastrado: '', nome: '', email: '', senha:'', telefone: '', });
 };

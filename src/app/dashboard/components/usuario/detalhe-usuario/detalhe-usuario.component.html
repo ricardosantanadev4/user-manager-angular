@@ -30,6 +30,11 @@
             <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
                 <small>Coloque um e-mail válido.</small>
             </div>
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" formControlName="senha" aria-labelledby="senha" />
+            <div *ngIf="form.get('senha')?.invalid && form.get('senha')?.touched">
+                <small>A senha é obrigatória</small>
+            </div>
             <label for="telefone">Telefone:</label>
             <input type="text" id="telefone" name="telefone" formControlName="telefone" aria-labelledby="telefone" />
             <div *ngIf="form.get('telefone')?.invalid && form.get('telefone')?.touched">

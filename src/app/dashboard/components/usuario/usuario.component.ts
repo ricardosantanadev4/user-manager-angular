@@ -8,10 +8,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule, TooltipPosition } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { IUsuario } from '../../../shared/models/usuario.interface';
 import { NotificationService } from '../../../shared/services/notification.service';
+import { TokenService } from '../../../shared/services/token.service';
 import { UsuarioService } from '../../../shared/services/usuario.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario',
@@ -43,7 +44,8 @@ export class UsuarioComponent {
   position: TooltipPosition[] = ['below', 'above', 'left', 'right'];
 
   constructor(private usuarioService: UsuarioService, private router: Router,
-    private route: ActivatedRoute, private notificationService: NotificationService) {
+    private route: ActivatedRoute, private notificationService: NotificationService,
+    private tokenService: TokenService) {
     this.listarUsuarios();
   }
 
@@ -129,7 +131,7 @@ export class UsuarioComponent {
                 });
               },
               error: response => {
-                if (response.status === 403 && this.usuarioService.isUser()) {
+                if (response.status === 403 && this.tokenService.isUser()) {
                   this.notificationService.showError('Você não tem permissão para realizar essa ação!')
                     .then(() => {
                       this.listarUsuarios();
@@ -147,7 +149,6 @@ export class UsuarioComponent {
         }
       })
   }
-
 
   goToFirstPage() {
     this.currentPage = 1;

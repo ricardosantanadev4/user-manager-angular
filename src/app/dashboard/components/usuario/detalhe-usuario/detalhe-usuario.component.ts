@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IUsuario } from '../../../../shared/models/usuario.interface';
 import { NotificationService } from '../../../../shared/services/notification.service';
 import { UsuarioService } from '../../../../shared/services/usuario.service';
+import { TokenService } from '../../../../shared/services/token.service';
 
 @Component({
   selector: 'app-detalhe-usuario',
@@ -14,13 +15,14 @@ import { UsuarioService } from '../../../../shared/services/usuario.service';
   styleUrl: './detalhe-usuario.component.scss'
 })
 export class DetalheUsuarioComponent {
+
   form!: FormGroup;
   usuarioCadastrado = 'User-Teste';
   usuarioSalvo: Boolean = false;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
     private usuarioService: UsuarioService, private router: Router,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService, private tokenService: TokenService) {
     const usuarioResolver: IUsuario = this.route.snapshot.data['usuarioResolver']
     this.initForm(usuarioResolver);
   }
@@ -32,6 +34,7 @@ export class DetalheUsuarioComponent {
       usuarioCadastrado: [usuarioResolver?.usuarioCadastrado],
       nome: [usuarioResolver?.nome, Validators.required],
       email: [usuarioResolver?.email, [Validators.required, Validators.email]],
+      senha: [usuarioResolver?.senha, [Validators.required]],
       telefone: [usuarioResolver?.telefone, [Validators.required, , Validators.minLength(11),
       Validators.maxLength(11), Validators.pattern('^[0-9]+$')]],
     })
@@ -54,7 +57,7 @@ export class DetalheUsuarioComponent {
             this.notificationService.showSuccess('Usuário salvo com sucesso!');
           },
           error: (response) => {
-            if (response.status === 403 && this.usuarioService.isUser()) {
+            if (response.status === 403 && this.tokenService.isUser()) {
               this.notificationService.showError('Você não tem permissão para realizar essa ação!')
             }
           }
@@ -68,7 +71,7 @@ export class DetalheUsuarioComponent {
           this.notificationService.showSuccess('Usuário editado com sucesso!');
         },
         error: response => {
-          if (response.status === 403 && this.usuarioService.isUser()) {
+          if (response.status === 403 && this.tokenService.isUser()) {
             this.notificationService.showError('Você não tem permissão para realizar essa ação!')
           }
         }
@@ -87,6 +90,7 @@ export class DetalheUsuarioComponent {
       usuarioCadastrado: this.usuarioCadastrado,
       nome: this.form.get('nome')?.value,
       email: this.form.get('email')?.value,
+      senha: this.form.get('senha')?.value,
       telefone: this.form.get('telefone')?.value
     })
   }
@@ -98,6 +102,7 @@ export class DetalheUsuarioComponent {
       usuarioCadastrado: usuario.usuarioCadastrado,
       nome: usuario.nome,
       email: usuario.email,
+      senha: usuario.senha,
       telefone: usuario.telefone,
     })
   }
