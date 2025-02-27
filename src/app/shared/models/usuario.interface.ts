@@ -6,4 +6,10 @@ export interface IUsuario {
     email: string;
     senha: string;
     telefone: string;
+    role: Role;
+}
+
+export enum Role {
+    ADMIN = 'ADMIN',
+    USER = 'USER'
 }

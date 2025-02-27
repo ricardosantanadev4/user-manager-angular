@@ -7,7 +7,7 @@
     <form class="inputs" [formGroup]="form">
         <div class="form-group">
             <label for="codigo">Código:</label>
-            <input type="text" [disabled]="true" id="codigo" name="codigo" [value]="form.get('id')?.value" />
+            <input [disabled]="true" type="text"  id="codigo" name="codigo" [value]="form.get('id')?.value" />
         </div>
         <div class="form-group">
             <label for="dataHoraCadastro">Data/Hora Cadastro:</label>
@@ -38,6 +38,15 @@
             <label for="telefone">Telefone:</label>
             <input type="text" id="telefone" name="telefone" formControlName="telefone" aria-labelledby="telefone" />
             <div *ngIf="form.get('telefone')?.invalid && form.get('telefone')?.touched">
+                <small>O telefone é obrigatório.</small>
+            </div>
+            <label for="perfil">Perfil:</label>
+            <select id="perfil" name="perfil" formControlName="role" aria-labelledby="perfil">
+                <option value=""></option>
+                <option value="ADMIN">Aministrador</option>
+                <option value="USER">Usuário</option>
+            </select>
+            <div *ngIf="form.get('perfil')?.invalid && form.get('perfil')?.touched">
                 <small>O telefone é obrigatório.</small>
             </div>
         </div>

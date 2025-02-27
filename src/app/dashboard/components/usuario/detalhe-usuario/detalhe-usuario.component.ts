@@ -1,5 +1,5 @@
 import { DatePipe, NgClass, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUsuario } from '../../../../shared/models/usuario.interface';
@@ -14,10 +14,10 @@ import { TokenService } from '../../../../shared/services/token.service';
   templateUrl: './detalhe-usuario.component.html',
   styleUrl: './detalhe-usuario.component.scss'
 })
-export class DetalheUsuarioComponent {
+export class DetalheUsuarioComponent implements OnInit{
 
   form!: FormGroup;
-  usuarioCadastrado = 'User-Teste';
+  usuarioCadastrado = '';
   usuarioSalvo: Boolean = false;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute,
@@ -25,6 +25,13 @@ export class DetalheUsuarioComponent {
     private notificationService: NotificationService, private tokenService: TokenService) {
     const usuarioResolver: IUsuario = this.route.snapshot.data['usuarioResolver']
     this.initForm(usuarioResolver);
+  }
+  ngOnInit(): void {
+    this.getUserName();
+  }
+
+  getUserName(){
+    this.usuarioCadastrado = this.tokenService.getUserName();
   }
 
   initForm(usuarioResolver: IUsuario) {
@@ -37,6 +44,7 @@ export class DetalheUsuarioComponent {
       senha: [usuarioResolver?.senha, [Validators.required]],
       telefone: [usuarioResolver?.telefone, [Validators.required, , Validators.minLength(11),
       Validators.maxLength(11), Validators.pattern('^[0-9]+$')]],
+      role: [usuarioResolver?.role, [Validators.required]],
     })
   }
 
@@ -91,11 +99,13 @@ export class DetalheUsuarioComponent {
       nome: this.form.get('nome')?.value,
       email: this.form.get('email')?.value,
       senha: this.form.get('senha')?.value,
-      telefone: this.form.get('telefone')?.value
+      telefone: this.form.get('telefone')?.value,
+      role: this.form.get('role')?.value,
     })
   }
 
   carregarUsuarioNoFormulario(usuario: IUsuario) {
+    console.log(usuario.dataHoraCadastro);
     this.form.setValue({
       id: usuario.id,
       dataHoraCadastro: usuario.dataHoraCadastro,
@@ -104,6 +114,7 @@ export class DetalheUsuarioComponent {
       email: usuario.email,
       senha: usuario.senha,
       telefone: usuario.telefone,
+      role: usuario.role,
     })
   }
 }

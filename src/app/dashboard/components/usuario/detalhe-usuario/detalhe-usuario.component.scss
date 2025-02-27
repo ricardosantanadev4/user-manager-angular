@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .formulario-container {
     max-width: 1140px;
     margin: 20px auto;
@@ -44,6 +48,10 @@
                     border-color: #007bff;
                     outline: none;
                 }
+            }
+
+            select {
+                @extend input
             }
 
             small {
