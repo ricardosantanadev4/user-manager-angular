@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
@@ -13,7 +13,7 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss'
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit {
   menuSelected = '';
   linkSelected = '';
   userName = '';
@@ -23,6 +23,11 @@ export class SidenavComponent {
 
   constructor(private router: Router, private tokenService: TokenService) {
   }
+
+  ngOnInit(): void {
+    this.getUserName();
+  }
+
 
   userLogout() {
     this.router.navigate(['/auth/login']);
