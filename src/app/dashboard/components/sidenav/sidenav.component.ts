@@ -3,6 +3,7 @@ import { Component, HostListener } from '@angular/core';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
+import { TokenService } from '../../../shared/services/token.service';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 @Component({
@@ -15,11 +16,12 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
 export class SidenavComponent {
   menuSelected = '';
   linkSelected = '';
+  userName = '';
   activeSubMenu: string | null = null;
   clickSubmenu: string | null = null;
   isSidenavClose!: boolean;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private tokenService: TokenService) {
   }
 
   userLogout() {
@@ -39,13 +41,13 @@ export class SidenavComponent {
     }
   }
 
-  toogleSubmenuMenu(subMenu: string) {
-    if (this.clickSubmenu === subMenu) {
-      this.clickSubmenu = null;
-    } else {
-      this.clickSubmenu = subMenu;
-    }
-  }
+  // toogleSubmenuMenu(subMenu: string) {
+  //   if (this.clickSubmenu === subMenu) {
+  //     this.clickSubmenu = null;
+  //   } else {
+  //     this.clickSubmenu = subMenu;
+  //   }
+  // }
 
   navigateTo(route: string) {
     this.toogleSidenav('clickMenuLinkSideNav');
@@ -61,5 +63,9 @@ export class SidenavComponent {
   onResize(event: any) {
     const width = event.target ? event.target.innerWidth : event;
     this.isSidenavClose = width < 577;
+  }
+
+  getUserName() {
+    this.userName = this.tokenService.getUserName();
   }
 }
