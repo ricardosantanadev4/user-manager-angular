@@ -1,0 +1,83 @@
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3f51b5;
+    padding: 0 8px;
+    color: white;
+    font-family: Arial, sans-serif;
+    height: 64px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, .3);
+
+    @media(max-width: 640px) {
+        height: auto;
+        min-height: 64px;
+
+        .logo {
+            word-break: break-all;
+        }
+    }
+
+    .toolbar-left {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+    }
+
+    .menu-button {
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+    }
+
+    .toolbar-right {
+        color: white;
+        margin-left: 15px;
+        text-decoration: none;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+
+        .user-name {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        @media(max-width: 576px) {
+            .hidden {
+                display: none;
+            }
+
+        }
+
+    }
+
+    mat-icon {
+        color: white;
+    }
+}
+
+::ng-deep .mat-mdc-menu-panel {
+    background-color: #ffffff !important;
+}
+
+.mat-mdc-menu-item:not([disabled]):hover {
+    background-color: rgba(0, 0, 0, .04);
+}
+
+.mat-mdc-menu-item .mat-icon-no-color,
+.mat-mdc-menu-item .mat-mdc-menu-submenu-icon {
+    color: rgba(0, 0, 0, .54);
+}
+
+::ng-deep .mat-mdc-menu-content,
+::ng-deep .mat-mdc-menu-content ::ng-deep .mat-mdc-menu-item ::ng-deep .mat-mdc-menu-item-text {
+    font-weight: 400 !important;
+}

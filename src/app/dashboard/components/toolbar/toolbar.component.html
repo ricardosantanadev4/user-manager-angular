@@ -1,0 +1,24 @@
+<div class="toolbar">
+    <div class="toolbar-left">
+        <button class="menu-button" mat-icon-button aria-label="Botão abre e fecha sidenav" (click)="toogleSideNav()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span class="logo">Dashboard</span>
+    </div>
+    <div class="toolbar-right">
+        <span class="user-name hidden">{{userName}}</span>
+        <button class="menu-button hidden" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Botão de menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+                <mat-icon>settings</mat-icon>
+                <span>Alterar senha</span>
+            </button>
+            <button mat-menu-item (click)="SignOut()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Sair</span>
+            </button>
+        </mat-menu>
+    </div>
+</div>

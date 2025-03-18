@@ -1,0 +1,40 @@
+<app-toolbar (userLogout)="userLogout()" (userToogleSidenav)="userToogleSidenav()"></app-toolbar>
+
+<div class="container">
+    <div class="overlay" [ngClass]="{'show-overlay': !isSidenavClose}" (click)="toogleSidenav('clickOverlay')">
+    </div>
+    <div id="mySidenav" class="sidenav" [ngClass]="{'close': isSidenavClose}">
+
+        <div class="menu-item" [ngClass]="{'backgroudActive': menuSelected === 'menu3'}">
+            <a (click)="toggleSubMenu('menu3')" matRipple>
+                <mat-icon class="menu-icon" aria-hidden="false" aria-label="Example home icon" fontIcon="construction"
+                    [ngClass]="{'colorActive':menuSelected === 'menu3'}"></mat-icon>
+                <span [ngClass]="{'colorActive':menuSelected === 'menu3'}">Administração</span>
+                <mat-icon class="arrow-icon" aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_right"
+                    [ngClass]="{'rotated':activeSubMenu === 'menu3'}"></mat-icon>
+            </a>
+            <div class="submenu" [ngClass]="{'open-submenu': activeSubMenu === 'menu3'}">
+                <a class="submenuLink" (click)="navigateTo('usuarios')"
+                    [ngClass]="{'colorActive': linkSelected === 'usuarios'}" matRipple>Usuários</a>
+            </div>
+        </div>
+
+        <div class="menu-item hideMenu" [ngClass]="{'backgroudActive': menuSelected === 'menu4'}">
+            <a (click)="toggleSubMenu('menu4')" matRipple>
+                <mat-icon class="menu-icon" aria-hidden="false" aria-label="Example home icon" fontIcon="person"
+                    [ngClass]="{'colorActive':menuSelected === 'menu4'}"></mat-icon>
+                <span [ngClass]="{'colorActive':menuSelected === 'menu4'}">{{userName}}</span>
+                <mat-icon class="arrow-icon" aria-hidden="false" aria-label="Example home icon" fontIcon="arrow_right"
+                    [ngClass]="{'rotated':activeSubMenu === 'menu3'}"></mat-icon>
+            </a>
+            <div class="submenu" [ngClass]="{'open-submenu': activeSubMenu === 'menu4'}">
+                <a class="submenuLink" (click)="navigateTo('usuarios')"
+                    [ngClass]="{'colorActive': linkSelected === 'usuarios'}" matRipple (click)="userLogout()">Sair</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content" [ngClass]="{'shifted': !isSidenavClose}">
+        <router-outlet></router-outlet>
+    </div>
+</div>

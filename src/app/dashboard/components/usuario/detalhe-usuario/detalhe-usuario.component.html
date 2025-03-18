@@ -1,0 +1,61 @@
+<main class="formulario-container">
+    <!-- Primeira Div: Título -->
+    <div class="header">
+        <h2 class="titulo">Departamento</h2>
+    </div>
+    <!-- Segunda Div: Inputs -->
+    <form class="inputs" [formGroup]="form">
+        <div class="form-group">
+            <label for="codigo">Código:</label>
+            <input [disabled]="true" type="text"  id="codigo" name="codigo" [value]="form.get('id')?.value" />
+        </div>
+        <div class="form-group">
+            <label for="dataHoraCadastro">Data/Hora Cadastro:</label>
+            <input type="text" [disabled]="true" id="dataHoraCadastro" name="dataHoraCadastro"
+                [value]="form.get('dataHoraCadastro')?.value | date: 'dd-MM-yy HH:mm:ss'" />
+        </div>
+        <div class="form-group">
+            <label for="usuarioCadastrado">Usuário Cadastrado:</label>
+            <input type="text" [disabled]="true" id="usuarioCadastrado" name="usuarioCadastrado"
+                [value]="form.get('usuarioCadastrado')?.value" />
+        </div>
+        <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" formControlName="nome" aria-labelledby="nome" />
+            <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched">
+                <small>O nome é obrigatório.</small>
+            </div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" formControlName="email" aria-labelledby="email" />
+            <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+                <small>Coloque um e-mail válido.</small>
+            </div>
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" formControlName="senha" aria-labelledby="senha" />
+            <div *ngIf="form.get('senha')?.invalid && form.get('senha')?.touched">
+                <small>A senha é obrigatória</small>
+            </div>
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone" formControlName="telefone" aria-labelledby="telefone" />
+            <div *ngIf="form.get('telefone')?.invalid && form.get('telefone')?.touched">
+                <small>O telefone é obrigatório.</small>
+            </div>
+            <label for="perfil">Perfil:</label>
+            <select id="perfil" name="perfil" formControlName="role" aria-labelledby="perfil">
+                <option value=""></option>
+                <option value="ADMIN">Aministrador</option>
+                <option value="USER">Usuário</option>
+            </select>
+            <div *ngIf="form.get('perfil')?.invalid && form.get('perfil')?.touched">
+                <small>O telefone é obrigatório.</small>
+            </div>
+        </div>
+        <!-- Terceira Div: Botões -->
+        <div class="footer">
+            <button type="button" [disabled]="usuarioSalvo" [ngClass]="{'button-cancel':!usuarioSalvo, 
+            'disabled': usuarioSalvo}" (click)="cancelar()">Cancelar</button>
+            <button type="submit" [disabled]="usuarioSalvo" [ngClass]="{'button-save': !usuarioSalvo, 
+            'disabled': usuarioSalvo}" (click)="salvar()">Salvar</button>
+        </div>
+    </form>
+</main>

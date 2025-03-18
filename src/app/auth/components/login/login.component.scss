@@ -1,0 +1,139 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3F51B5;
+
+    .login-container {
+        width: 300px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+        background: #fff;
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 32px;
+
+            & img {
+                width: 220px;
+            }
+        }
+
+        div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px 0;
+            box-sizing: border-box;
+
+            border: none; // Remove todas as bordas
+            border-bottom: 1px solid rgba(0, 0, 0, .42) !important; // Adiciona borda apenas na parte inferior
+            outline: none; // Remove a linha de foco padrão
+
+            &:focus {
+                border-bottom: 2px solid #3F51B5 !important; // Cor da borda quando o campo é focado
+            }
+
+            &:-webkit-autofill {
+                box-shadow: 0 0 0 1000px #ffffff inset !important; // Muda cor da sobra criada automaticamente pelo navegador
+            }
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, .12);
+            border: none;
+
+            &.button-active {
+                background-color: #3F51B5;
+                color: #fff;
+                border: none;
+            }
+        }
+
+    }
+
+    @media(max-width: 412px) {
+        .login-container {
+            width: 248px;
+        }
+    }
+
+    .input-container {
+        position: relative;
+        margin-bottom: 50px !important;
+
+        input {
+            width: 100%;
+            padding: 8px 0;
+            border: none;
+            border-bottom: 1px solid #3F51B5;
+            outline: none;
+            box-sizing: border-box;
+            font-size: 16px;
+            background: none;
+
+            &:focus+label,
+            &:not(:placeholder-shown)+label {
+                top: -15px;
+                font-size: 12px;
+            }
+
+            &:focus {
+                border-bottom: 2px solid #3F51B5;
+            }
+
+            &.invalid {
+                color: red;
+                border-bottom: 1px solid red !important;
+
+                &:focus {
+                    color: red !important;
+                    border-bottom: 2px solid red !important;
+                }
+            }
+        }
+
+        label {
+            position: absolute;
+            top: -25%;
+            left: 0;
+            transform: translateY(25%);
+            transition: 0.3s ease;
+            color: rgba(0, 0, 0, .54);
+            pointer-events: none; // Impede o clique no label
+            font-size: 14px;
+
+            &.label-invalid {
+                color: red;
+
+                &:focus {
+                    color: red;
+                }
+            }
+        }
+
+        small {
+            // position: absolute;
+            bottom: -26px; // Posiciona o 'small' abaixo do input
+            left: 0;
+            color: red;
+            font-size: 12px;
+        }
+    }
+}

@@ -1,0 +1,109 @@
+<div class="table-container">
+    <div class="table-header">
+        <div class="header-left">
+            <input class="input-search" type="text" [(ngModel)]="filter" (keydown.enter)="listarUsuarios()"
+                placeholder="Pesquisar..." />
+            <mat-form-field style="margin-left: 15px;">
+                <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Data inicial">
+                    <input matEndDate formControlName="end" placeholder="Data Final">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker" #tooltip="matTooltip" matTooltip="Filtrar Por Data"
+                    [matTooltipPosition]="position[1]" matTooltipHideDelay="1"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+            <button style="margin-left: 15px;" mat-icon-button aria-label="Recarregar todos usuários"
+                #tooltip="matTooltip" matTooltip="Recarregar Usuários" [matTooltipPosition]="position[1]"
+                matTooltipHideDelay="1" (click)="listarUsuarios()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+            <button style="margin-left: 15px;" mat-icon-button aria-label="Limpar campos" #tooltip="matTooltip"
+                matTooltip="Limpar Datas" [matTooltipPosition]="position[1]" matTooltipHideDelay="1"
+                (click)="limparCampoDeDatas()">
+                <mat-icon>cleaning_services</mat-icon>
+            </button>
+        </div>
+        <button class="button-new-user" mat-raised-button (click)="navigateTo('detalhe')">Novo Usuario</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th (click)="sort('id')">Código <span *ngIf="sortedColumn === 'id'">
+                        {{ sortDirection === 'asc' ? '▲':'▼'}}</span></th>
+                <th (click)="sort('dataHoraCadastro')">Data/Hora Cadastro <span
+                        *ngIf="sortedColumn === 'dataHoraCadastro'">
+                        {{ sortDirection === 'asc' ? '▲':'▼'}}</span></th>
+                <th (click)="sort('usuarioCadastrado')">Usuário Cadastrado <span
+                        *ngIf="sortedColumn === 'usuarioCadastrado'">
+                        {{ sortDirection === 'asc' ? '▲':'▼'}}</span></th>
+                <th (click)="sort('nome')">Nome <span *ngIf="sortedColumn === 'nome'">
+                        {{ sortDirection === 'asc' ? '▲' : '▼'}}</span></th>
+                <th (click)="sort('email')">Email <span *ngIf="sortedColumn === 'email'">
+                        {{ sortDirection === 'asc' ? '▲' :'▼'}}</span></th>
+                <th (click)="sort('telefone')">Telefone <span *ngIf="sortedColumn === 'telefone'">
+                        {{ sortDirection=== 'asc' ? '▲' : '▼'}}</span></th>
+                <th><span>Ação</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of applyFilter()">
+                <td data-label="Código">{{ item.id }}</td>
+                <td data-label="Data/Hora Cadastro">{{ item.dataHoraCadastro | date: 'dd-MM-yy HH:mm:ss'}}</td>
+                <td data-label="Usuário Cadastrado">{{ item.usuarioCadastrado }}</td>
+                <td data-label="Nome">{{ item.nome }}</td>
+                <td data-label="Email">{{ item.email }}</td>
+                <td data-label="Telefone">{{ item.telefone }}</td>
+                <td data-label="Ação?">
+                    <div class="action-buttons">
+                        <button class="edit-btn" mat-icon-button aria-label="Botão de editar" #tooltip="matTooltip"
+                            matTooltip="Editar" [matTooltipPosition]="position[1]" matTooltipHideDelay="1"
+                            (click)="navigateTo('detalhe', item.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button class="delete-btn" mat-icon-button aria-label="Botão de excluir" #tooltip="matTooltip"
+                            matTooltip="Excluir" [matTooltipPosition]="position[1]" matTooltipHideDelay="1"
+                            (click)="removerUsuario(item.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <span>Total Listado: {{ totalElements }} - Exibindo de {{ (currentPage - 1) * itemsPerPage + 1 }} até {{
+            currentPage * itemsPerPage
+            }}</span>
+        <div class="pagination-controls">
+            <div class="container-controls">
+                <button class="controls" (click)="goToFirstPage()" [disabled]="currentPage === 1">Primeira</button>
+                <!-- Botões de navegação anterior e próxima -->
+                <button class="controls" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+            </div>
+            <!-- Botões numerados para as páginas -->
+            <div class="container-controls">
+                <button class="controls" *ngFor="let page of getPageNumbers()" (click)="goToPage(page)"
+                    [disabled]="currentPage === page">
+                    {{ page }}
+                </button>
+            </div>
+            <div class="container-controls">
+                <button class="controls" (click)="nextPage()" [disabled]="currentPage === totalPages">Próxima</button>
+                <button class="controls" (click)="goToLastPage()"
+                    [disabled]="currentPage === totalPages">Última</button>
+            </div>
+            <div class="container-controls">
+                <label class="controls" for="itemsPerPage">Itens por página:</label>
+                <select class="controls" id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()">
+                    <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+                </select>
+            </div>
+            <div class="container-controls">
+                <img class="controls" src="/assets/excel.png.png" role="button" aria-label="Exportar para Excel"
+                    tabindex="0" (click)="baixarRelatorio('xlsx')">
+                <img class="controls" src="/assets/pdf.png.png" role="button" aria-label="Exportar para PDF"
+                    tabindex="0" (click)="baixarRelatorio('pdf')">
+            </div>
+        </div>
+    </div>
+</div>
