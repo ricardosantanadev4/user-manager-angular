@@ -12,7 +12,7 @@ import { DaoService } from './dao.service';
 })
 export class UsuarioService {
 
-  private readonly apiUrl = 'https://user-manager-spring-production.up.railway.app';
+  private readonly apiUrl = 'https://user-manager-spring.onrender.com';
   // private readonly apiUrl = '';
 
   constructor(

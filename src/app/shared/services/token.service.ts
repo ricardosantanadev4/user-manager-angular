@@ -10,7 +10,7 @@ import { AppState } from '../../app.state';
 })
 export class TokenService {
 
-  private readonly apiUrl = 'https://user-manager-spring-production.up.railway.app';
+  private readonly apiUrl = 'https://user-manager-spring.onrender.com';
   // private readonly apiUrl = '';
   private jwtHelper = new JwtHelperService();
 
