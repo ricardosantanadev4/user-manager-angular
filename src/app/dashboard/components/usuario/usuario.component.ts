@@ -201,17 +201,18 @@ export class UsuarioComponent {
   }
 
   baixarRelatorio(formato: string) {
-    // this.relatorioService.baixarRelatorio(formato).subscribe(response => {
-    // const blob = response.body; // Acessa o corpo da resposta, que é o Blob
-    // if (blob) {
-    // const url = window.URL.createObjectURL(blob);
-    // const a = document.createElement('a');
-    // a.href = url;
-    // a.download = `relatorio.${formato}`;
-    // document.body.appendChild(a);
-    // a.click();
-    // document.body.removeChild(a);
-    // }
-    // });
+    this.usuarioService.baixarRelatorio(formato).subscribe(response => {
+      const blob = response.body;
+      if (blob) {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `relatorio.${formato}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+    });
   }
+
 }

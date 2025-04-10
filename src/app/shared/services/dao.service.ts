@@ -36,7 +36,7 @@ export class DaoService {
     return this.httpClient.get<Blob>(url, {
       headers: this.getHeaders('application/octet-stream'),
       observe: 'response',
-      responseType: 'blob' as 'json' // Corrigido: apenas 'blob', sem o 'as json'
+      responseType: 'blob' as 'json' // apenas 'blob', sem o 'as json'
     });
   }
 

@@ -12,8 +12,8 @@ import { DaoService } from './dao.service';
 })
 export class UsuarioService {
 
-  private readonly apiUrl = 'https://user-manager-spring.onrender.com';
-  // private readonly apiUrl = '';
+  // private readonly apiUrl = 'https://user-manager-spring.onrender.com';
+  private readonly apiUrl = '';
 
   constructor(
     private daoService: DaoService,
@@ -45,6 +45,10 @@ export class UsuarioService {
   public removerUsuario(usuarioId: number) {
     return this.daoService.delete<IUsuario>(`${this.apiUrl}${AppSettings.USUARIOS}/${usuarioId}`,
       DaoService.MEDIA_TYPE_APP_JSON);
+  }
+
+  public baixarRelatorio(formato: string): Observable<HttpResponse<Blob>> {
+    return this.daoService.getFile(`${AppSettings.DOWNLOADRELATORIO}/${formato}`);
   }
 
 }
