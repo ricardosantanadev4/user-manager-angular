@@ -13,8 +13,6 @@ import { environment } from '../../../environments/environment';
 })
 export class UsuarioService {
 
-  // private readonly apiUrl = 'https://user-manager-spring.onrender.com';
-  // private readonly apiUrl = '';
   private readonly apiUrl = environment.apiUrl;
 
   constructor(

@@ -11,8 +11,6 @@ import { DaoService } from './dao.service';
 })
 export class TokenService {
 
-  // private readonly apiUrl = 'https://user-manager-spring.onrender.com';
-  // private readonly apiUrl = '';
   private readonly apiUrl = environment.apiUrl;
   
   private jwtHelper = new JwtHelperService();
