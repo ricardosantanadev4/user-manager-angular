@@ -6,14 +6,16 @@ import { AppState } from '../../app.state';
 import { IUsuarioPage } from '../models/usuario-page.interface';
 import { IUsuario } from '../models/usuario.interface';
 import { DaoService } from './dao.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  private readonly apiUrl = 'https://user-manager-spring.onrender.com';
+  // private readonly apiUrl = 'https://user-manager-spring.onrender.com';
   // private readonly apiUrl = '';
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(
     private daoService: DaoService,

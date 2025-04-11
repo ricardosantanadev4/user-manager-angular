@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { ILogin } from '../models/login.interface';
-import { DaoService } from './dao.service';
+import { environment } from '../../../environments/environment';
 import { AppSettings } from '../../app.settings';
 import { AppState } from '../../app.state';
+import { ILogin } from '../models/login.interface';
+import { DaoService } from './dao.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
 
-  private readonly apiUrl = 'https://user-manager-spring.onrender.com';
+  // private readonly apiUrl = 'https://user-manager-spring.onrender.com';
   // private readonly apiUrl = '';
+  private readonly apiUrl = environment.apiUrl;
+  
   private jwtHelper = new JwtHelperService();
 
   constructor(private daoService: DaoService, private state: AppState,) { }
