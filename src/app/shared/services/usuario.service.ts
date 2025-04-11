@@ -48,7 +48,7 @@ export class UsuarioService {
   }
 
   public baixarRelatorio(formato: string): Observable<HttpResponse<Blob>> {
-    return this.daoService.getFile(`${AppSettings.DOWNLOADRELATORIO}/${formato}`);
+    return this.daoService.getFile(`${this.apiUrl}${AppSettings.DOWNLOADRELATORIO}/${formato}`);
   }
 
 }
