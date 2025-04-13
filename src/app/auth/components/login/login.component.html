@@ -19,7 +19,7 @@
             </div>
 
             <div class="input-container">
-                <input id="senha" formControlName="senha" type="senha" placeholder=" " [ngClass]="{'invalid':loginForm.get('senha')?.invalid 
+                <input id="senha" formControlName="senha" type="password" placeholder=" " [ngClass]="{'invalid':loginForm.get('senha')?.invalid 
           && (loginForm.get('senha')?.touched 
           || loginForm.get('senha')?.dirty)}" />
                 <label for="senha" [ngClass]="{'label-invalid':loginForm.get('senha')?.invalid 
